@@ -28,9 +28,10 @@ object PhotoController {
 
     fun getForQuery(ctx: Context) {
         val command = ctx.queryParam("command") ?: "all"
+        val ownerId = ctx.queryParam("owner-id")
         when {
-            command == "all" && ctx.queryParam("owner-id")?.isNotEmpty() == true -> {
-                ctx.json(PhotoDao.findByOwnerId(ctx.queryParam("owner-id")!!))
+            command == "all" && ownerId?.isNotEmpty() == true -> {
+                ctx.json(PhotoDao.findByOwnerId(ownerId))
             }
             command == "all" -> ctx.json(PhotoDao.all(ctx.currentUser!!))
             command == "latest" -> ctx.json(PhotoDao.all(ctx.currentUser!!).take(8))

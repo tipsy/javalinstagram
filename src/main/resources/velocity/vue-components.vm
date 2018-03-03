@@ -35,7 +35,7 @@
 <script>
     Vue.component('photo-component', {
         template: '#photo-component',
-        props: ["showUploadForm", "forUser"],
+        props: ["showUploadForm", "forUser", "justLatest"],
         data: function () {
             return {
                 signedInUser: Cookies.get("signed-in-user"),
@@ -82,8 +82,9 @@
                 });
             },
             getUserPhotos: function () {
-                let qp = this.forUser ? "?owner-id=" + Cookies.get("signed-in-user") : ""
-                axios.get("/api/photos" + qp).then(response => {
+                let ownerQp = this.forUser ? "owner-id=" + Cookies.get("signed-in-user") : "";
+                let commandQp = this.justLatest ? "command=latest" : "";
+                axios.get("/api/photos?" + ownerQp + "&" + commandQp).then(response => {
                     this.photos = response.data;
                 });
             }
