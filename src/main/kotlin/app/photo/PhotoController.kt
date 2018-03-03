@@ -11,7 +11,7 @@ import java.util.*
 object PhotoController {
 
     fun upload(ctx: Context) {
-        ctx.uploadedFile("app/photohoto")?.let { photoFile ->
+        ctx.uploadedFile("photo")?.let { photoFile ->
             val photo = File.createTempFile("temp", "upload").apply {
                 FileUtils.copyInputStreamToFile(photoFile.content, this)
             }
