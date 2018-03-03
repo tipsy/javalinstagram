@@ -1,5 +1,7 @@
-package app
+package app.user
 
+import app.Credentials
+import app.currentUser
 import io.javalin.Context
 import io.javalin.HaltException
 import org.mindrot.jbcrypt.BCrypt

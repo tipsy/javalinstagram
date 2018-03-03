@@ -1,4 +1,6 @@
-package app
+package app.like
+
+import app.performAction
 
 object LikeDao {
 

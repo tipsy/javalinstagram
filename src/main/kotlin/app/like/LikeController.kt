@@ -1,5 +1,6 @@
-package app
+package app.like
 
+import app.currentUser
 import io.javalin.Context
 
 object LikeController {

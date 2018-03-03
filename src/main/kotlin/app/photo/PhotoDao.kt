@@ -1,4 +1,9 @@
-package app
+package app.photo
+
+import app.Photo
+import app.map
+import app.parseTimestamp
+import app.performAction
 
 object PhotoDao {
 

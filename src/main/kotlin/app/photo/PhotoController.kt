@@ -1,5 +1,6 @@
-package app
+package app.photo
 
+import app.currentUser
 import io.javalin.Context
 import net.coobird.thumbnailator.Thumbnails
 import net.coobird.thumbnailator.geometry.Positions
