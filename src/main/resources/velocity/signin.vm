@@ -1,0 +1,109 @@
+#parse("/velocity/macros/layout.vm")
+#@layout({"hideMenu": true})
+<div id="gradient">
+    <style>
+        #gradient {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+
+        #signinform {
+            max-width: 340px;
+            background: rgba(0, 0, 0, 0.15);
+            margin: 200px auto 50px;
+            padding: 16px 32px;
+            color: #fff;
+            text-align: center;
+            border-radius: 25px;
+        }
+
+        #signinform * {
+            outline: none;
+        }
+
+        #signinform input,
+        #signinform button {
+            display: block;
+            width: 100%;
+            border: 0;
+            background: rgba(0, 0, 0, 0.20);
+            color: #fff;
+            height: 42px;
+            padding: 0 12px;
+            font-size: 15px;
+        }
+
+        #signinform button {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 24px 0;
+            cursor: pointer;
+        }
+
+        #signinform input[type=password] {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        #signinform ::placeholder {
+            color: #fff;
+            opacity: 0.5;
+        }
+
+        #switchers > * {
+            font-size: 14px;
+            margin-top: 16px;
+            text-align: right;
+        }
+
+        #switchers span {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+    </style>
+    <form v-on:submit.prevent="signInOrUp" id="signinform">
+        <h1 v-if="isSignin">Sign in</h1>
+        <h1 v-else>Create account</h1>
+        <input v-model="username" type="text" name="username" placeholder="Username" autocomplete="off" required autofocus>
+        <input v-model="password" @keyup.enter="signInOrUp" type="password" name="password" placeholder="Password" autocomplete="off" required>
+        <button v-if="isSignin">Sign in</button>
+        <button v-else>Create account</button>
+        <div id="switchers">
+            <div v-if="isSignin">Need an account? <span @click="switchForm">Register</span></div>
+            <div v-else>Have an account? <span @click="switchForm">Sign in</span></div>
+        </div>
+    </form>
+    <script>
+        new Vue({
+            el: "#signinform",
+            data: {
+                hasError: false,
+                isSignin: true,
+                username: "",
+                password: "",
+            },
+            methods: {
+                signInOrUp: function () {
+                    this.hasError = false;
+                    let url = this.isSignin ? "/signin" : "/signup";
+                    axios.post(url, {username: this.username, password: this.password}).then(response => {
+                        return this.isSignin ? location.href = "/" : vex.dialog.alert({
+                            message: `Welcome '${this.username}'!`,
+                            afterClose: () => location.href = "/"
+                        });
+                    }).catch(error => {
+                        vex.dialog.alert(error.response.data);
+                    });
+                },
+                switchForm: function () {
+                    this.isSignin = !this.isSignin;
+                }
+            }
+        });
+    </script>
+</div>
+
+#end

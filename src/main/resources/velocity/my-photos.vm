@@ -1,0 +1,12 @@
+#parse("/velocity/macros/layout.vm")
+#@layout()
+<div id="example">
+    <photo-component :show-upload-form=true :for-user=true></photo-component>
+</div>
+<script>
+    new Vue({el: "#example"})
+</script>
+#end
+
+
+
