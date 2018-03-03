@@ -1,3 +1,5 @@
+package app
+
 import io.javalin.Context
 
 var Context.currentUser: String?

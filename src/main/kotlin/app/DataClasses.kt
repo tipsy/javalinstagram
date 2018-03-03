@@ -1,3 +1,5 @@
+package app
+
 import java.util.*
 
 data class User(val id: String, val password: String, val created: Date)
