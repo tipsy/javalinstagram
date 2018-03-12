@@ -4,6 +4,7 @@ import app.Credentials
 import app.currentUser
 import io.javalin.Context
 import io.javalin.HaltException
+import io.javalin.core.util.Header
 import org.mindrot.jbcrypt.BCrypt
 
 object UserController {
@@ -41,6 +42,9 @@ object UserController {
 
     fun signOut(ctx: Context) {
         ctx.currentUser = null
+        if (ctx.header(Header.ACCEPT)?.contains("html") == true) {
+            ctx.redirect("/signin")
+        }
     }
 
 }
