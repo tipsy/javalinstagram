@@ -33,8 +33,7 @@
         },
         methods: {
             signInOrUp() {
-                this.hasError = false;
-                let url = this.isSignin ? "/signin" : "/signup";
+                let url = "/api/" + (this.isSignin ? "signin" : "signup");
                 axios.post(url, {username: this.username, password: this.password}).then(() => {
                     location.href = "/"
                 }).catch(error => {

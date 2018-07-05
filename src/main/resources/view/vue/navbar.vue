@@ -17,7 +17,7 @@
                                 <small>Signed in as '{{signedInUser}}'</small>
                             </v-list-tile>
                             <v-list-tile href="/my-photos">My photos</v-list-tile>
-                            <v-list-tile href="/signout">Sign out</v-list-tile>
+                            <v-list-tile href="/api/signout">Sign out</v-list-tile>
                         </v-list>
                     </v-menu>
                 </v-toolbar-items>

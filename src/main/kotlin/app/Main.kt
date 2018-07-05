@@ -21,27 +21,19 @@ fun main(args: Array<String>) {
         port(7000)
         enableStaticFiles("user-uploads", Location.EXTERNAL)
         accessManager { handler, ctx, permitted ->
-            if (permitted.contains(UserRole.ANYONE) || ctx.currentUser != null && permitted.contains(UserRole.LOGGED_IN)) {
-                handler.handle(ctx)
-            } else if (ctx.header(Header.ACCEPT)?.contains("html") == true) {
-                ctx.redirect("/signin")
-            } else {
-                ctx.status(401)
+            when {
+                permitted.contains(UserRole.ANYONE) -> handler.handle(ctx)
+                ctx.currentUser != null && permitted.contains(UserRole.LOGGED_IN) -> handler.handle(ctx)
+                ctx.header(Header.ACCEPT)?.contains("html") == true -> ctx.redirect("/signin")
+                else -> ctx.status(401)
             }
         }
     }.start()
 
-    // sign in
-    app.get("/signin", { ctx -> ctx.render("/view/signin.vm") }, setOf(UserRole.ANYONE))
-    app.get("/signout", UserController::signOut, setOf(UserRole.ANYONE))
-    app.post("/signin", UserController::signIn, setOf(UserRole.ANYONE))
-    app.post("/signup", UserController::signUp, setOf(UserRole.ANYONE))
-
     app.routes {
-
+        get("/signin", { ctx -> ctx.render("/view/signin.vm") }, setOf(UserRole.ANYONE))
         get("/", { ctx -> ctx.render("/view/index.vm") }, setOf(UserRole.LOGGED_IN))
         get("/my-photos", { ctx -> ctx.render("/view/my-photos.vm") }, setOf(UserRole.LOGGED_IN))
-
         path("api") {
             path("photos") {
                 get(PhotoController::getForQuery, setOf(UserRole.LOGGED_IN))
@@ -51,6 +43,9 @@ fun main(args: Array<String>) {
                 post(LikeController::create, setOf(UserRole.LOGGED_IN))
                 delete(LikeController::delete, setOf(UserRole.LOGGED_IN))
             }
+            get("signout", UserController::signOut, setOf(UserRole.ANYONE))
+            post("signin", UserController::signIn, setOf(UserRole.ANYONE))
+            post("signup", UserController::signUp, setOf(UserRole.ANYONE))
         }
     }
 
