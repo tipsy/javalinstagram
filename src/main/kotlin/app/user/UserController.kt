@@ -33,7 +33,7 @@ object UserController {
     }
 
     private fun getCredentialsOrDieTrying(ctx: Context): Credentials {
-        val credentials = ctx.bodyAsClass(Credentials::class.java)
+        val credentials = ctx.body<Credentials>()
         if (credentials.username.isBlank() || credentials.password.isBlank()) {
             throw HaltException(400, "Missing username/password")
         }

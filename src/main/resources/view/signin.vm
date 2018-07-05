@@ -1,0 +1,4 @@
+#parse("/view/_layout.vm")
+#@layout()
+<signin-view></signin-view>
+#end

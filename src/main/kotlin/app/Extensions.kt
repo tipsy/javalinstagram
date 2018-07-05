@@ -3,7 +3,7 @@ package app
 import io.javalin.Context
 
 var Context.currentUser: String?
-    get() = this.request().session.getAttribute("signed-in-user") as String?
+    get() = this.sessionAttribute("signed-in-user")
     set(username) {
         if (username != null) {
             this.sessionAttribute("signed-in-user", username)

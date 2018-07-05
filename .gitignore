@@ -1,6 +1,8 @@
 .idea
 *.iml
 target/
+javalinstagram.db
+user-uploads/static/p
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

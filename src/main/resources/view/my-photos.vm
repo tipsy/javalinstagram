@@ -1,0 +1,4 @@
+#parse("/view/_layout.vm")
+#@layout()
+<photo-component :show-upload-form=true :for-user=true :just-latest=false></photo-component>
+#end

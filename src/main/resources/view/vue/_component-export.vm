@@ -1,0 +1,4 @@
+#include("/view/vue/navbar.vue")
+#include("/view/vue/photos.vue")
+#include("/view/vue/photo-upload-form.vue")
+#include("/view/vue/signin-view.vue")
