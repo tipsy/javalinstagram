@@ -53,6 +53,7 @@
         max-width: 360px;
         margin: 50px auto;
     }
+
     .login-card h1 {
         font-family: 'Lobster Two', cursive;
         font-weight: 400;
