@@ -83,6 +83,9 @@
     }
 
     .preview {
-        margin: 0 auto;
+        width: 400px;
+        height: 400px;
+        max-width: 100%;
+        object-fit: cover;
     }
 </style>
