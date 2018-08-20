@@ -2,8 +2,8 @@ package app.user
 
 import app.Credentials
 import app.currentUser
+import io.javalin.BadRequestResponse
 import io.javalin.Context
-import io.javalin.HaltException
 import io.javalin.core.util.Header
 import org.mindrot.jbcrypt.BCrypt
 
@@ -35,7 +35,7 @@ object UserController {
     private fun getCredentialsOrDieTrying(ctx: Context): Credentials {
         val credentials = ctx.body<Credentials>()
         if (credentials.username.isBlank() || credentials.password.isBlank()) {
-            throw HaltException(400, "Missing username/password")
+            throw BadRequestResponse("Missing username/password")
         }
         return credentials
     }

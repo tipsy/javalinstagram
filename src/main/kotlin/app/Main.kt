@@ -3,7 +3,7 @@ package app
 import app.like.LikeController
 import app.photo.PhotoController
 import app.user.UserController
-import io.javalin.ApiBuilder.*
+import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.Javalin
 import io.javalin.core.util.Header
 import io.javalin.security.Role
