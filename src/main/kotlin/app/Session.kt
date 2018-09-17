@@ -1,6 +1,5 @@
 package app
 
-import org.eclipse.jetty.nosql.mongodb.MongoSessionDataStoreFactory
 import org.eclipse.jetty.server.session.*
 import java.io.File
 
