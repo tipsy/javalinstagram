@@ -3,8 +3,8 @@ package app
 import app.like.LikeController
 import app.photo.PhotoController
 import app.user.UserController
-import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.Javalin
+import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.core.util.Header
 import io.javalin.security.Role
 import io.javalin.staticfiles.Location
@@ -20,6 +20,7 @@ fun main(args: Array<String>) {
     val app = Javalin.create().apply {
         port(7000)
         enableStaticFiles("user-uploads", Location.EXTERNAL)
+        sessionHandler { Session.fileSessionHandler() }
         accessManager { handler, ctx, permitted ->
             when {
                 permitted.contains(UserRole.ANYONE) -> handler.handle(ctx)

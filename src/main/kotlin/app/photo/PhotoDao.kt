@@ -1,13 +1,13 @@
 package app.photo
 
 import app.Photo
+import app.hikari
 import app.map
 import app.parseTimestamp
-import app.performAction
 
 object PhotoDao {
 
-    fun add(photoId: String, ownerId: String) = performAction { connection ->
+    fun add(photoId: String, ownerId: String) = hikari.connection.use { connection ->
         connection.prepareStatement("insert into photo (id, ownerid) values(?, ?)").apply {
             setString(1, photoId)
             setString(2, ownerId)
@@ -17,8 +17,8 @@ object PhotoDao {
     // this should be done as a SQL-query (WHERE photo.ownerid = ?) if performance is important
     fun findByOwnerId(ownerId: String): List<Photo> = all(ownerId).filter { it.ownerId == ownerId }
 
-    fun all(likeOwner: String): List<Photo> = performAction { connection ->
-        return@performAction connection.prepareStatement("""
+    fun all(likeOwner: String): List<Photo> = hikari.connection.use { connection ->
+        connection.prepareStatement("""
             |SELECT
             |    photo.*,
             |    COUNT(like.photoid) as like_count,

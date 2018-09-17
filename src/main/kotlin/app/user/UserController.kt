@@ -2,7 +2,6 @@ package app.user
 
 import app.Credentials
 import app.currentUser
-import io.javalin.BadRequestResponse
 import io.javalin.Context
 import io.javalin.core.util.Header
 import org.mindrot.jbcrypt.BCrypt
@@ -10,7 +9,9 @@ import org.mindrot.jbcrypt.BCrypt
 object UserController {
 
     fun signIn(ctx: Context) {
-        val (username, password) = getCredentialsOrDieTrying(ctx)
+        val (username, password) = ctx.validatedBody<Credentials>()
+                .check({ it.username.isNotBlank() && it.password.isNotBlank() })
+                .getOrThrow()
         val user = UserDao.findById(username)
         if (user != null && BCrypt.checkpw(password, user.password)) {
             ctx.status(200)
@@ -21,7 +22,9 @@ object UserController {
     }
 
     fun signUp(ctx: Context) {
-        val (username, password) = getCredentialsOrDieTrying(ctx)
+        val (username, password) = ctx.validatedBody<Credentials>()
+                .check({ it.username.isNotBlank() && it.password.isNotBlank() })
+                .getOrThrow()
         val user = UserDao.findById(username)
         if (user == null) {
             UserDao.add(userId = username, password = BCrypt.hashpw(password, BCrypt.gensalt()))
@@ -30,14 +33,6 @@ object UserController {
         } else {
             ctx.status(400).json("app.User '$username' already exists")
         }
-    }
-
-    private fun getCredentialsOrDieTrying(ctx: Context): Credentials {
-        val credentials = ctx.body<Credentials>()
-        if (credentials.username.isBlank() || credentials.password.isBlank()) {
-            throw BadRequestResponse("Missing username/password")
-        }
-        return credentials
     }
 
     fun signOut(ctx: Context) {

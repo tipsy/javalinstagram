@@ -1,38 +1,23 @@
 package app
 
-import io.javalin.core.JavalinServlet
-import org.slf4j.LoggerFactory
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import java.sql.Connection
-import java.sql.DriverManager
+import java.sql.PreparedStatement
 import java.sql.ResultSet
-import java.sql.SQLException
 import java.text.SimpleDateFormat
 
-private val log = LoggerFactory.getLogger(JavalinServlet::class.java)
-
-fun <T> queryAndMap(query: String, fn: (ResultSet) -> T): Iterable<T> = performAction { connection ->
-    return@performAction connection.createStatement().executeQuery(query).map { fn(it) }.toList()
-}
-
-fun <T> performAction(func: (Connection) -> T): T {
-    var connection: Connection? = null
-    try {
-        connection = DriverManager.getConnection("jdbc:sqlite:javalinstagram.db")
-        return func.invoke(connection)
-    } catch (e: SQLException) {
-        log.warn("Failed to invoke function with connection", e)
-    } finally {
-        try {
-            connection?.close()
-        } catch (e: SQLException) {
-            log.warn("Failed to close connection", e)
-        }
-    }
-    throw SQLException()
-}
+val hikari = HikariDataSource(HikariConfig().apply {
+    setJdbcUrl("jdbc:sqlite:javalinstagram.db");
+    addDataSourceProperty("cachePrepStmts", "true");
+    addDataSourceProperty("prepStmtCacheSize", "250");
+    addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+})
 
 // really should get rid of this
 fun ResultSet.parseTimestamp(timestamp: String) = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(this.getString(timestamp))
+
+fun HikariDataSource.preparedStatement(string: String) = this.connection.use { it.prepareStatement(string) }
 
 fun <T> ResultSet.map(fn: (ResultSet) -> T): Iterable<T> {
     val resultSet = this
@@ -45,10 +30,10 @@ fun <T> ResultSet.map(fn: (ResultSet) -> T): Iterable<T> {
     }
 }
 
-// database-setup
+// database-setup/reset
 fun main(args: Array<String>) {
 
-    performAction { connection ->
+    hikari.connection.use { connection ->
         connection.createStatement().apply {
             executeUpdate("drop table if exists user")
             executeUpdate("create table user (id string, password string, created timestamp DEFAULT CURRENT_TIMESTAMP)")
