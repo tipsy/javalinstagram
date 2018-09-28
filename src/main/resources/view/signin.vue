@@ -1,3 +1,4 @@
+@head:
 <template id="signin-view">
     <div>
         <v-card class="login-card">
@@ -62,3 +63,5 @@
         margin-bottom: 16px;
     }
 </style>
+@body:
+<signin-view></signin-view>
