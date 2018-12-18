@@ -1,6 +1,6 @@
-package app.like
+package javalinstagram.like
 
-import app.hikari
+import javalinstagram.hikari
 
 object LikeDao {
 

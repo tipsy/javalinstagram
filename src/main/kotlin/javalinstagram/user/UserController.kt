@@ -1,7 +1,7 @@
-package app.user
+package javalinstagram.user
 
-import app.Credentials
-import app.currentUser
+import javalinstagram.Credentials
+import javalinstagram.currentUser
 import io.javalin.Context
 import io.javalin.core.util.Header
 import org.mindrot.jbcrypt.BCrypt

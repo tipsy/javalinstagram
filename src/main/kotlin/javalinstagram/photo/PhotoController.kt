@@ -1,15 +1,18 @@
-package app.photo
+package javalinstagram.photo
 
-import app.currentUser
+import javalinstagram.currentUser
 import io.javalin.Context
 import net.coobird.thumbnailator.Thumbnails
 import net.coobird.thumbnailator.geometry.Positions
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.*
 
 object PhotoController {
 
     fun upload(ctx: Context) {
+        Files.createDirectories(Paths.get("user-uploads/static/p"))
         ctx.uploadedFile("photo")?.let { photoFile ->
             val photo = File.createTempFile("temp", "upload").apply {
                 photoFile.content.copyTo(this.outputStream())

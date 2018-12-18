@@ -1,4 +1,4 @@
-package app
+package javalinstagram
 
 import io.javalin.Context
 

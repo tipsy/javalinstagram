@@ -38,7 +38,10 @@ export default {
     template: `
         <div class="photo-gallery">
             <div class="photos">
-                <div v-if="photos.length === 0 && forUser">Hmm... There's nothing here. You should upload something.</div>
+                <p v-if="photos.length === 0">
+                    There are no photos on Javalinstagram yet. 
+                    You should <router-link to="/my-photos">upload something</router-link>.
+                </p>
                 <div v-for="photo in photos" class="photo">
                     <img @click="openLightbox(photo.id)" :src="'/static/p/' + photo.id">
                     <div class="meta">
@@ -54,7 +57,7 @@ export default {
                 </div>
             </div>
             <v-dialog hide-overlay v-model="lightbox" max-width="800" @input="v => v || closeLightbox()">
-                <v-card>
+                <v-card class="photo-gallery">
                     <img v-if="lightboxedPhoto !== null" :src="'/static/p/' + lightboxedPhoto">
                 </v-card>
             </v-dialog>

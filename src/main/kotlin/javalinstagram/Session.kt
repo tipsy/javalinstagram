@@ -1,4 +1,4 @@
-package app
+package javalinstagram
 
 import org.eclipse.jetty.server.session.*
 import java.io.File

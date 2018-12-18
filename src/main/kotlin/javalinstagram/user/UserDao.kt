@@ -1,9 +1,9 @@
-package app.user
+package javalinstagram.user
 
-import app.User
-import app.hikari
-import app.map
-import app.parseTimestamp
+import javalinstagram.User
+import javalinstagram.hikari
+import javalinstagram.map
+import javalinstagram.parseTimestamp
 
 object UserDao {
 

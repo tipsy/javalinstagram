@@ -1,23 +1,17 @@
-package app
+package javalinstagram
 
-import app.like.LikeController
-import app.photo.PhotoController
-import app.user.UserController
+import javalinstagram.like.LikeController
+import javalinstagram.photo.PhotoController
+import javalinstagram.user.UserController
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.core.util.Header
 import io.javalin.security.SecurityUtil.roles
 import io.javalin.staticfiles.Location
-import java.nio.file.Files
-import java.nio.file.Paths
-import app.Role.LOGGED_IN
-import app.Role.ANYONE
-
-enum class Role : io.javalin.security.Role { LOGGED_IN, ANYONE }
+import javalinstagram.Role.LOGGED_IN
+import javalinstagram.Role.ANYONE
 
 fun main(args: Array<String>) {
-
-    Files.createDirectories(Paths.get("user-uploads/static/p"));
 
     val app = Javalin.create().apply {
         port(7000)

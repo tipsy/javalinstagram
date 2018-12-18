@@ -1,9 +1,9 @@
-package app.photo
+package javalinstagram.photo
 
-import app.Photo
-import app.hikari
-import app.map
-import app.parseTimestamp
+import javalinstagram.Photo
+import javalinstagram.hikari
+import javalinstagram.map
+import javalinstagram.parseTimestamp
 
 object PhotoDao {
 
