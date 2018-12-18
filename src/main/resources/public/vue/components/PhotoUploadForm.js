@@ -5,18 +5,18 @@ export default {
     }),
     methods: {
         previewPhoto() {
-            if (document.querySelector("#photoinput").files[0]) {
+            if (this.$refs.uploadInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = e => this.photopreview = e.target.result;
-                reader.readAsDataURL(document.querySelector("#photoinput").files[0]);
+                reader.readAsDataURL(this.$refs.uploadInput.files[0]);
             }
         },
         clearUploadForm() {
-            document.querySelector("#photoinput").value = "";
+            this.$refs.uploadInput.value = "";
             this.photopreview = null;
         },
         uploadPhoto() {
-            const data = new FormData(document.getElementById("upload-form"));
+            const data = new FormData(this.$refs.uploadForm);
             const config = {headers: {"Content-Type": "multipart/form-data"}};
             axios.post("/api/photos", data, config).then(() => {
                 this.clearUploadForm();
@@ -34,17 +34,17 @@ export default {
     },
     template: `
         <div class="photo-upload-form">
-            <div id="dropzone">
+            <div class="photo-upload-droparea">
                 <div>Drag or click to choose photo</div>
-                <form id="upload-form">
-                    <input id="photoinput" @change="previewPhoto" name="photo" type="file" accept="image/*">
+                <form id="upload-form" ref="uploadForm">
+                    <input class="photo-upload-input" ref="uploadInput" @change="previewPhoto" name="photo" type="file" accept="image/*">
                 </form>
             </div>
             <v-dialog v-model="dialog" max-width="460" persistent>
                 <v-card>
                     <v-card-title class="headline">Publish photo?</v-card-title>
                     <v-card-text>
-                        <img :src="photopreview" class="preview">
+                        <img :src="photopreview" class="photo-upload-preview">
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
@@ -57,7 +57,7 @@ export default {
     `,
     beforeCreate() {
         this.$injectStyle(`<style id="photo-upload-form">
-            #dropzone {
+            .photo-upload-droparea {
                 position: relative;
                 width: 100%;
                 height: 120px;
@@ -68,7 +68,7 @@ export default {
                 background: #fff;
                 margin-bottom: 32px;
             }
-            #photoinput {
+            .photo-upload-input {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -76,7 +76,7 @@ export default {
                 width: 100%;
                 opacity: 0;
             }
-            .preview {
+            .photo-upload-preview {
                 width: 400px;
                 height: 400px;
                 max-width: 100%;
