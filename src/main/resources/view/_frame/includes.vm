@@ -1,5 +1,0 @@
-#include(
-    "/view/components/navbar.vue",
-    "/view/components/photos.vue",
-    "/view/components/photo-upload-form.vue"
-)
