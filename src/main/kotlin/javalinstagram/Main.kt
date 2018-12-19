@@ -10,6 +10,9 @@ import javalinstagram.Role.LOGGED_IN
 import javalinstagram.account.AccountController
 import javalinstagram.like.LikeController
 import javalinstagram.photo.PhotoController
+import org.jdbi.v3.core.Jdbi
+
+val Database = Jdbi.create("jdbc:sqlite:javalinstagram.db")
 
 fun main(args: Array<String>) {
 

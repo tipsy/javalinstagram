@@ -30,7 +30,7 @@ object AccountController {
                 .getOrThrow()
         val user = AccountDao.findById(username)
         if (user == null) {
-            AccountDao.add(userId = username, password = BCrypt.hashpw(password, BCrypt.gensalt()))
+            AccountDao.add(id = username, password = BCrypt.hashpw(password, BCrypt.gensalt()))
             ctx.status(201)
             ctx.currentUser = username
         } else {
