@@ -1,6 +1,8 @@
 package javalinstagram
 
-import org.eclipse.jetty.server.session.*
+import org.eclipse.jetty.server.session.DefaultSessionCache
+import org.eclipse.jetty.server.session.FileSessionDataStore
+import org.eclipse.jetty.server.session.SessionHandler
 import java.io.File
 
 object Session {

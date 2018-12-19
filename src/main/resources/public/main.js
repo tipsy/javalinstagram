@@ -14,17 +14,29 @@ Vue.prototype.$injectStyle = (styleText) => {
 };
 
 Vue.prototype.$eventBus = new Vue();
-Vue.prototype.$currentUser = localStorage.getItem("current-user");
+
+const router = new VueRouter({
+    mode: "history",
+    routes: [
+        {path: "/", component: Feed, name: "Feed"},
+        {path: "/sign-in", component: Signin, name: "Signin"},
+        {path: "/my-photos", component: MyPhotos, name: "MyPhotos"},
+        {path: "/*", component: NotFound, name: "NotFound"},
+    ],
+});
+
+router.beforeEach((to, from, next) => {
+    if (localStorage.getItem("current-user") !== null || to.name === "Signin") {
+        return next();
+    }
+    router.push({name: "Signin"}); // redirect to signin
+});
 
 new Vue({
-    router: new VueRouter({
-        mode: "history",
-        routes: [
-            {path: "/", component: Feed, name: "Feed"},
-            {path: "/signin", component: Signin, name: "Signin"},
-            {path: "/my-photos", component: MyPhotos, name: "MyPhotos"},
-            {path: "/*", component: NotFound, name: "NotFound"},
-        ]
-    }),
+    router: router,
+    data: { // shared mutable state
+        currentUser: localStorage.getItem("current-user"),
+    },
     render: h => h(App)
 }).$mount("#app");
+

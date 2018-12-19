@@ -25,7 +25,7 @@ export default {
             axios.delete("/api/likes?photo-id=" + photoId).then(res => this.loadPhotos());
         },
         loadPhotos() {
-            let owner = this.forUser ? "owner-id=" + this.$currentUser : "";
+            let owner = this.forUser ? "owner-id=" + this.$root.$data.currentUser : "";
             let take = this.take ? "take=" + this.take : "";
             axios.get("/api/photos?" + owner + "&" + take).then(res => this.photos = res.data);
         }

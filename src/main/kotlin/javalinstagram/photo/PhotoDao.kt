@@ -1,13 +1,15 @@
 package javalinstagram.photo
 
-import javalinstagram.Photo
-import javalinstagram.hikari
+import javalinstagram.Hikari
 import javalinstagram.map
 import javalinstagram.parseTimestamp
+import java.util.*
+
+data class Photo(val id: String, val ownerId: String, val likes: Int, val isLiked: Boolean, val created: Date)
 
 object PhotoDao {
 
-    fun add(photoId: String, ownerId: String) = hikari.connection.use { connection ->
+    fun add(photoId: String, ownerId: String) = Hikari.connection.use { connection ->
         connection.prepareStatement("insert into photo (id, ownerid) values(?, ?)").apply {
             setString(1, photoId)
             setString(2, ownerId)
@@ -17,7 +19,7 @@ object PhotoDao {
     // this should be done as a SQL-query (WHERE photo.ownerid = ?) if performance is important
     fun findByOwnerId(ownerId: String): List<Photo> = all(ownerId).filter { it.ownerId == ownerId }
 
-    fun all(likeOwner: String): List<Photo> = hikari.connection.use { connection ->
+    fun all(likeOwner: String): List<Photo> = Hikari.connection.use { connection ->
         connection.prepareStatement("""
             |SELECT
             |    photo.*,

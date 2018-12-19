@@ -2,8 +2,11 @@ export default {
     name: "NavBar",
     methods: {
         signOut() {
-            localStorage.clear();
-            location.href = "/api/signout";
+            axios.post("/api/account/sign-out").then(() => {
+                localStorage.removeItem("current-user");
+                this.$root.$data.currentUser = "";
+                this.$router.push({name: "Signin"});
+            });
         }
     },
     template: `
@@ -13,14 +16,14 @@ export default {
                     <router-link to="/"><img class="logo-img" src="/logo.png" alt="Javalinstagram"></router-link>
                     <router-link to="/"><span class="logo-text">Javalinstagram</span></router-link>
                     <v-spacer></v-spacer>
-                    <v-toolbar-items v-if="$currentUser">
+                    <v-toolbar-items v-if="$root.$data.currentUser">
                         <v-menu bottom left offset-y>
                             <v-btn slot="activator" flat>
                                 <v-icon color="grey darken-2">account_circle</v-icon>
                             </v-btn>
                             <v-list>
                                 <v-list-tile>
-                                    <small>Signed in as '{{$currentUser}}'</small>
+                                    <small>Signed in as '{{$root.$data.currentUser}}'</small>
                                 </v-list-tile>
                                 <v-list-tile><router-link to="/my-photos">My photos</router-link></v-list-tile>
                                 <v-list-tile @click="signOut">Sign out</v-list-tile>

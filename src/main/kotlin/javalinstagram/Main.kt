@@ -1,15 +1,15 @@
 package javalinstagram
 
-import javalinstagram.like.LikeController
-import javalinstagram.photo.PhotoController
-import javalinstagram.user.UserController
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.core.util.Header
 import io.javalin.security.SecurityUtil.roles
 import io.javalin.staticfiles.Location
-import javalinstagram.Role.LOGGED_IN
 import javalinstagram.Role.ANYONE
+import javalinstagram.Role.LOGGED_IN
+import javalinstagram.account.AccountController
+import javalinstagram.like.LikeController
+import javalinstagram.photo.PhotoController
 
 fun main(args: Array<String>) {
 
@@ -39,9 +39,11 @@ fun main(args: Array<String>) {
                 post(LikeController::create, roles(LOGGED_IN))
                 delete(LikeController::delete, roles(LOGGED_IN))
             }
-            get("signout", UserController::signOut, roles(ANYONE))
-            post("signin", UserController::signIn, roles(ANYONE))
-            post("signup", UserController::signUp, roles(ANYONE))
+            path("account") {
+                post("sign-up", AccountController::signUp, roles(ANYONE))
+                post("sign-in", AccountController::signIn, roles(ANYONE))
+                post("sign-out", AccountController::signOut, roles(ANYONE))
+            }
         }
     }
 

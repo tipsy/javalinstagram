@@ -1,7 +1,7 @@
 package javalinstagram.like
 
-import javalinstagram.currentUser
 import io.javalin.Context
+import javalinstagram.currentUser
 
 object LikeController {
 

@@ -10,7 +10,7 @@ export default {
         <div class="my-photos-view">
             <h1>My photos</h1>
             <photo-upload-form></photo-upload-form>
-            <photo-gallery for-user=""></photo-gallery>
+            <photo-gallery :owner="true"></photo-gallery>
         </div>
     `,
 };

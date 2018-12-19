@@ -1,11 +1,11 @@
-package javalinstagram.dbutil
+package javalinstagram.util
 
-import javalinstagram.hikari
+import javalinstagram.Hikari
 
 // database-setup/reset
 fun main(args: Array<String>) {
 
-    hikari.connection.use { connection ->
+    Hikari.connection.use { connection ->
         connection.createStatement().apply {
             executeUpdate("drop table if exists user")
             executeUpdate("create table user (id string, password string, created timestamp DEFAULT CURRENT_TIMESTAMP)")
@@ -17,3 +17,4 @@ fun main(args: Array<String>) {
     }
 
 }
+

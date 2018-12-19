@@ -9,10 +9,11 @@ export default {
     }),
     methods: {
         signInOrUp() {
-            let url = "/api/" + (this.isSignin ? "signin" : "signup");
+            let url = "/api/account/" + (this.isSignin ? "sign-in" : "sign-up");
             axios.post(url, {username: this.username, password: this.password}).then(() => {
                 localStorage.setItem("current-user", this.username);
-                location.href = "/"
+                this.$root.$data.currentUser = this.username;
+                this.$router.push({name: "Feed"});
             }).catch(error => {
                 this.errorMessage = error.response.data;
                 this.errorAlert = true;
