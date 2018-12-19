@@ -1,6 +1,8 @@
 package javalinstagram.account
 
+import io.javalin.BadRequestResponse
 import io.javalin.Context
+import io.javalin.UnauthorizedResponse
 import io.javalin.core.util.Header
 import javalinstagram.currentUser
 import org.mindrot.jbcrypt.BCrypt
@@ -18,7 +20,7 @@ object AccountController {
             ctx.status(200)
             ctx.currentUser = username
         } else {
-            ctx.status(400).json("Incorrect username/password")
+            throw UnauthorizedResponse("Incorrect username/password")
         }
     }
 
@@ -32,7 +34,7 @@ object AccountController {
             ctx.status(201)
             ctx.currentUser = username
         } else {
-            ctx.status(400).json("app.Account '$username' already exists")
+            throw BadRequestResponse("Username '$username' is taken")
         }
     }
 

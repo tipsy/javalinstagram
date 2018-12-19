@@ -15,7 +15,7 @@ export default {
                 this.$root.$data.currentUser = this.username;
                 this.$router.push({name: "Feed"});
             }).catch(error => {
-                this.errorMessage = error.response.data;
+                this.errorMessage = error.response.data.title;
                 this.errorAlert = true;
             });
         },
