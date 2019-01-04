@@ -19,8 +19,8 @@ fun main(args: Array<String>) {
     val app = Javalin.create().apply {
         port(7000)
         enableStaticFiles("user-uploads", Location.EXTERNAL)
-        enableStaticFiles("/public", Location.CLASSPATH)
-        enableSinglePageMode("/", "/public/index.html")
+        enableStaticFiles("src/main/resources/public", Location.EXTERNAL)
+        enableSinglePageMode("/", "src/main/resources/public/index.html", Location.EXTERNAL)
         sessionHandler { Session.fileSessionHandler() }
         accessManager { handler, ctx, permitted ->
             when {
