@@ -1,6 +1,6 @@
 package javalinstagram.photo
 
-import io.javalin.Context
+import io.javalin.http.Context
 import javalinstagram.currentUser
 import net.coobird.thumbnailator.Thumbnails
 import net.coobird.thumbnailator.geometry.Positions

@@ -1,6 +1,6 @@
 package javalinstagram
 
-import io.javalin.Context
+import io.javalin.http.Context
 import java.sql.ResultSet
 import java.text.SimpleDateFormat
 

@@ -2,9 +2,9 @@ package javalinstagram
 
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
+import io.javalin.core.security.SecurityUtil.roles
 import io.javalin.core.util.Header
-import io.javalin.security.SecurityUtil.roles
-import io.javalin.staticfiles.Location
+import io.javalin.http.staticfiles.Location
 import javalinstagram.Role.ANYONE
 import javalinstagram.Role.LOGGED_IN
 import javalinstagram.account.AccountController
@@ -14,15 +14,14 @@ import org.jdbi.v3.core.Jdbi
 
 val Database = Jdbi.create("jdbc:sqlite:javalinstagram.db")
 
-fun main(args: Array<String>) {
+fun main() {
 
-    val app = Javalin.create().apply {
-        port(7000)
-        enableStaticFiles("user-uploads", Location.EXTERNAL)
-        enableStaticFiles("src/main/resources/public", Location.EXTERNAL)
-        enableSinglePageMode("/", "src/main/resources/public/index.html", Location.EXTERNAL)
-        sessionHandler { Session.fileSessionHandler() }
-        accessManager { handler, ctx, permitted ->
+    val app = Javalin.create {
+        it.addStaticFiles("user-uploads", Location.EXTERNAL)
+        it.addStaticFiles("src/main/resources/public", Location.EXTERNAL)
+        it.addSinglePageRoot("/", "src/main/resources/public/index.html", Location.EXTERNAL)
+        it.sessionHandler{ Session.fileSessionHandler() }
+        it.accessManager{ handler, ctx, permitted ->
             when {
                 permitted.contains(ANYONE) -> handler.handle(ctx)
                 ctx.currentUser != null && permitted.contains(LOGGED_IN) -> handler.handle(ctx)
@@ -30,7 +29,7 @@ fun main(args: Array<String>) {
                 else -> ctx.status(401)
             }
         }
-    }.start()
+    }.start(7000)
 
     app.routes {
         path("api") {
