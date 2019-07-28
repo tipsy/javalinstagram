@@ -2,9 +2,13 @@ package javalinstagram
 
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
+import io.javalin.core.compression.Brotli
+import io.javalin.core.compression.Gzip
 import io.javalin.core.security.SecurityUtil.roles
 import io.javalin.core.util.Header
 import io.javalin.http.staticfiles.Location
+import io.javalin.plugin.rendering.vue.JavalinVue
+import io.javalin.plugin.rendering.vue.VueComponent
 import javalinstagram.Role.ANYONE
 import javalinstagram.Role.LOGGED_IN
 import javalinstagram.account.AccountController
@@ -19,9 +23,9 @@ fun main() {
     val app = Javalin.create {
         it.addStaticFiles("user-uploads", Location.EXTERNAL)
         it.addStaticFiles("src/main/resources/public", Location.EXTERNAL)
-        it.addSinglePageRoot("/", "src/main/resources/public/index.html", Location.EXTERNAL)
-        it.sessionHandler{ Session.fileSessionHandler() }
-        it.accessManager{ handler, ctx, permitted ->
+        it.enableWebjars()
+        it.sessionHandler { Session.fileSessionHandler() }
+        it.accessManager { handler, ctx, permitted ->
             when {
                 permitted.contains(ANYONE) -> handler.handle(ctx)
                 ctx.currentUser != null && permitted.contains(LOGGED_IN) -> handler.handle(ctx)
@@ -29,7 +33,17 @@ fun main() {
                 else -> ctx.status(401)
             }
         }
+        JavalinVue.stateFunction = { ctx -> mapOf("currentUser" to ctx.currentUser) }
+        it.compressionStrategy(Brotli(4), Gzip(6))
     }.start(7000)
+
+    app.routes {
+        get("/signin", VueComponent("<signin-view></signin-view>"), roles(ANYONE))
+        get("/", VueComponent("<feed-view></feed-view>"), roles(LOGGED_IN))
+        get("/my-photos", VueComponent("<my-photos-view></my-photos-view>"), roles(LOGGED_IN))
+    }
+
+    app.error(404, "html", VueComponent("<not-found-view></not-found-view>"))
 
     app.routes {
         path("api") {

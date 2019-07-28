@@ -48,14 +48,13 @@ Components are re-usable and can be included in one or more views:
 src
 └───main
     └───resources
-        └───public
-            └───vue
-                ├───components
-                ├───components
-                ├───index.html // loads main.js
-                └───main.js // frontend entry point
+        └───vue
+            ├───components
+            ├───views
+            ├───layout.html
 ```
 
-There is no Webpack or other build system, everything is built with native es6 modules.
+There is no Webpack or other build system, the application uses [JavalinVue](https://javalin.io/documentation#vue-support)
+for rapid development.
 
 ## Screenshot
