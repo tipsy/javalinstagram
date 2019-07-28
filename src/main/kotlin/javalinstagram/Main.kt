@@ -34,7 +34,6 @@ fun main() {
             }
         }
         JavalinVue.stateFunction = { ctx -> mapOf("currentUser" to ctx.currentUser) }
-        it.compressionStrategy(Brotli(4), Gzip(6))
     }.start(7000)
 
     app.routes {
