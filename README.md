@@ -6,9 +6,7 @@ A (very limited) Instagram clone built with
 * [JDBI](http://jdbi.org/) - Database connection pool and object mapping
 * [SQLite](https://www.sqlite.org/index.html) - Database
 * [Vue](https://vuejs.org/) - JavaScript view library
-* [Vue router](https://router.vuejs.org/) - Client side routing
 * [axios](https://github.com/axios/axios) - Client side http library
-* Native JavaScript modules (no Webpack or other frontend build tools)
 
 ## Functionality
 
@@ -51,7 +49,7 @@ src
         └───vue
             ├───components
             ├───views
-            ├───layout.html
+            └───layout.html
 ```
 
 There is no Webpack or other build system, the application uses [JavalinVue](https://javalin.io/documentation#vue-support)
