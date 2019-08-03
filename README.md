@@ -15,6 +15,9 @@ A (very limited) Instagram clone built with
 * Like/unlike photo
 * Get photos (for one user and for all users)
 
+## Screenshot
+![javalinstagram](https://user-images.githubusercontent.com/1521451/62417524-12c53b80-b652-11e9-9ac4-3cac1d63915e.PNG)
+
 ## Application structure
 
 ### Backend
@@ -54,5 +57,3 @@ src
 
 There is no Webpack or other build system, the application uses [JavalinVue](https://javalin.io/documentation#vue-support)
 for rapid development.
-
-## Screenshot
