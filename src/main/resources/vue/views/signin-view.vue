@@ -1,5 +1,5 @@
 <template id="signin-view">
-    <div class="signin-view">
+    <app-frame>
         <v-card class="signin-card">
             <v-card-text>
                 <h1 v-if="isSignin">Sign in</h1>
@@ -17,7 +17,7 @@
                 </div>
             </v-card-text>
         </v-card>
-    </div>
+    </app-frame>
 </template>
 <script>
     Vue.component("signin-view", {

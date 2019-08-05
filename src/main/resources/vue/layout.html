@@ -14,13 +14,6 @@
         <script src="/webjars/axios/0.19.0/dist/axios.min.js"></script>
         <script src="/webjars/vue/2.6.10/dist/vue.min.js"></script>
         <script src="webjars/vuetify/1.5.16/dist/vuetify.min.js"></script>
-        <style>
-            @media only screen and (min-width: 1600px) {
-                .container {
-                    max-width: 1200px;
-                }
-            }
-        </style>
         <script>
             Vue.prototype.$eventBus = new Vue();
             Object.assign(Vue.prototype.$vuetify.theme, {primary: "#bc50a4"});
@@ -29,14 +22,7 @@
     </head>
     <body>
         <main id="main-vue" v-cloak>
-            <v-app>
-                <v-content>
-                    <nav-bar></nav-bar>
-                    <v-container>
-                        @routeComponent
-                    </v-container>
-                </v-content>
-            </v-app>
+            @routeComponent
         </main>
         <script>
             new Vue({el: "#main-vue"});

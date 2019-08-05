@@ -8,7 +8,7 @@
                 <v-toolbar-items v-if="$javalin.state.currentUser">
                     <v-menu bottom left offset-y>
                         <v-btn slot="activator" flat>
-                            <v-icon color="grey darken-2">account_circle</v-icon>
+                            <v-icon color="grey darken-2" size="30">account_circle</v-icon>
                         </v-btn>
                         <v-list>
                             <v-list-tile>
@@ -45,6 +45,8 @@
 
     .navbar .logo-img {
         height: 44px;
+        display: block;
+        user-select: none;
     }
 
     .navbar .logo-text {
@@ -53,5 +55,6 @@
         font-weight: 400;
         color: #444;
         font-size: 28px;
+        user-select: none;
     }
 </style>

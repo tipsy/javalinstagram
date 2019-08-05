@@ -94,7 +94,7 @@
         float: left;
         border-radius: 3px;
         border: 2px solid #fff;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 2px rgba(0,0,0,0.2);
         background: #fff;
     }
     .photo-gallery .photo .meta {

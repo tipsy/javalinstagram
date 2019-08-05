@@ -1,7 +1,7 @@
 <template id="not-found-view">
-    <div class="not-found-view">
+    <app-frame>
         <h1>Page not found</h1>
-    </div>
+    </app-frame>
 </template>
 <script>
     Vue.component("not-found-view", {template: "#not-found-view"});
