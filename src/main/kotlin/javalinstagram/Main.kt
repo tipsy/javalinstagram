@@ -33,6 +33,7 @@ fun main() {
                 else -> ctx.status(401)
             }
         }
+        it.compressionStrategy(Brotli(), Gzip())
         JavalinVue.stateFunction = { ctx -> mapOf("currentUser" to ctx.currentUser) }
     }.start(7000)
 
