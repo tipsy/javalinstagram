@@ -10,10 +10,10 @@
                 <div class="meta">
                     <div>{{formatDate(photo.created)}}</div>
                     <div>{{photo.likes}} {{photo.likes === 1 ? "like" : "likes"}}</div>
-                    <div v-if="photo.liked" class="like-btn" @click="unlikePhoto(photo.id)">
+                    <div v-if="photo.isLiked" class="like-btn" @click="unlikePhoto(photo.id)">
                         <v-icon color="white" size="42">favorite</v-icon>
                     </div>
-                    <div v-if="!photo.liked" class="like-btn" @click="likePhoto(photo.id)">
+                    <div v-if="!photo.isLiked" class="like-btn" @click="likePhoto(photo.id)">
                         <v-icon color="white" size="42">favorite_border</v-icon>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
         </div>
         <v-dialog hide-overlay v-model="lightbox" max-width="800" @input="v => v || closeLightbox()">
             <v-card class="photo-gallery">
-                <img v-if="lightboxedPhoto !== null" :src="'/static/p/' + lightboxedPhoto">
+                <img v-if="lightboxedPhoto !== null" :src="`/static/p/${lightboxedPhoto}`">
             </v-card>
         </v-dialog>
     </div>
@@ -74,18 +74,21 @@
         display: block;
         max-width: 100%;
     }
+
     .photo-gallery h1 {
         font-family: 'Lobster Two', cursive;
         font-weight: 400;
         color: #444;
         font-size: 28px;
     }
+
     .photo-gallery .photos {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         animation: fadeIn .2s forwards;
     }
+
     .photo-gallery .photo {
         position: relative;
         display: block;
@@ -94,21 +97,32 @@
         float: left;
         border-radius: 3px;
         border: 2px solid #fff;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 2px rgba(0,0,0,0.2);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 2px rgba(0, 0, 0, 0.2);
         background: #fff;
     }
+
     .photo-gallery .photo .meta {
         font-size: 13px;
         padding: 5px;
         height: 42px;
         overflow: hidden;
     }
+
     .photo-gallery .like-btn {
         cursor: pointer;
         position: absolute;
         right: 8px;
         bottom: 48px;
-        opacity: 0.8;
+        text-shadow: 2px 2px #bc50a4, -1px -1px 2px rgba(0, 0, 0, 0.3);
+        user-select: none;
     }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
 </style>

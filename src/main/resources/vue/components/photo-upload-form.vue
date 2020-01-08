@@ -79,8 +79,8 @@
         opacity: 0;
     }
     .photo-upload-preview {
-        width: 400px;
-        height: 400px;
+        width: 428px;
+        height: 428px;
         max-width: 100%;
         object-fit: cover;
     }
