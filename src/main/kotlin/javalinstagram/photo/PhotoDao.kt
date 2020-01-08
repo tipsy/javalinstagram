@@ -20,13 +20,19 @@ object PhotoDao {
 
     fun all(userId: String) = Database.withHandle<List<Photo>, Exception> { handle ->
         handle.createQuery("""
-            |SELECT
-            |    photo.*,
-            |    COUNT(like.photoid) as like_count,
-            |    (SELECT 1 WHERE like.ownerid = :ownerid) as is_liked
-            |FROM photo LEFT JOIN like ON photo.id = like.photoid
+            |SELECT 
+            |	photo.*,
+            |	EXISTS(
+            |		SELECT *
+            |		FROM like
+            |		JOIN user ON user.id = like.ownerid AND like.photoid = photo.id
+            |		WHERE user.id = :ownerid
+            |	) AS is_liked,
+            |	COUNT(like.photoid) as like_count
+            |FROM (photo LEFT JOIN like ON id = like.photoid)
             |GROUP BY photo.id
-            |ORDER BY created desc""".trimMargin()
+            |ORDER BY created desc
+        """.trimMargin()
         ).bind("ownerid", userId).map { rs, ctx ->
             Photo(rs.getString("id"), rs.getString("ownerid"), rs.getInt("like_count"), rs.getBoolean("is_liked"), rs.parseTimestamp("created"))
         }.list()
