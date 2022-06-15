@@ -1,9 +1,9 @@
 <template id="feed-view">
-    <app-frame>
-        <h1>Latest photos</h1>
-        <photo-gallery take="8"></photo-gallery>
-    </app-frame>
+  <app-frame>
+    <h1>Latest photos</h1>
+    <photo-gallery take="8"></photo-gallery>
+  </app-frame>
 </template>
 <script>
-    Vue.component("feed-view", {template: "#feed-view"});
+Vue.component("feed-view", { template: "#feed-view" });
 </script>

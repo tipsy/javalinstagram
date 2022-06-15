@@ -13,7 +13,7 @@ object AccountController {
 
     fun signIn(ctx: Context) {
         val (username, password) = ctx.bodyValidator<Credentials>()
-                .check({ it.username.isNotBlank() && it.password.isNotBlank() })
+                .check({ it.username.isNotBlank() && it.password.isNotBlank() }, "Username or password missing")
                 .get()
         val user = AccountDao.findById(username)
         if (user != null && BCrypt.checkpw(password, user.password)) {
@@ -26,7 +26,7 @@ object AccountController {
 
     fun signUp(ctx: Context) {
         val (username, password) = ctx.bodyValidator<Credentials>()
-                .check({ it.username.isNotBlank() && it.password.isNotBlank() })
+                .check({ it.username.isNotBlank() && it.password.isNotBlank() }, "Username or password missing")
                 .get()
         val user = AccountDao.findById(username)
         if (user == null) {

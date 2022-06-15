@@ -15,6 +15,8 @@ object LikeController {
         ctx.status(204)
     }
 
-    private fun Context.validPhotoId() = this.queryParam<String>("photo-id").check({ it.length > 10 }).get()
+    private fun Context.validPhotoId() = this.queryParamAsClass<String>("photo-id")
+        .check({ it.length > 10 }, "IDs must be longer than 10 characters")
+        .get()
 
 }

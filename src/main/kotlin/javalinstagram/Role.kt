@@ -1,6 +1,8 @@
 package javalinstagram
 
-enum class Role : io.javalin.core.security.Role {
+import io.javalin.core.security.RouteRole
+
+enum class Role : RouteRole {
     LOGGED_IN,
     ANYONE
 }
